@@ -12,7 +12,7 @@
     <x-backpack::menu-dropdown-item title="Representatives" icon="la la-user-tie" :link="backpack_url('student-representative')" />
 </x-backpack::menu-dropdown>
 
-<x-backpack::menu-separator></x-backpack::menu-separator>
+{{-- <x-backpack::menu-separator></x-backpack::menu-separator> --}}
 
 <x-backpack::menu-dropdown title="Advanced" icon="la la-tools">
     <x-backpack::menu-dropdown-item title="Settings" icon="la la-cogs" :link="backpack_url('setting')" />
