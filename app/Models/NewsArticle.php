@@ -1,56 +1,63 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Support\Str;
+    use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\Sluggable;
+    use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\SluggableScopeHelpers;
+    // use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+    use Backpack\CRUD\app\Models\Traits\CrudTrait;
+    use Spatie\Permission\Traits\HasRoles;
 
-class NewsArticle extends Model
-{
-    use CrudTrait;
-    use HasFactory;
+    class NewsArticle extends Model {
+        use CrudTrait;
+        use HasRoles;
+        // use Sluggable, SluggableScopeHelpers;
+        // use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+        protected $table = 'news_articles';
+        protected $primaryKey = 'id';
+        public $timestamps = true;
+        // protected $guarded = ['id'];
+        protected $fillable = [
+            'title', 'slug', 'content', 'short_desc', 'publisher', 'status'
+        ];
 
-    protected $table = 'news_articles';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    protected $guarded = ['id'];
-    // protected $fillable = [];
-    // protected $hidden = [];
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+        /**
+         * Return the sluggable configuration array for this model.
+         *
+         * @return array
+         */
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | FUNCTIONS
+        |--------------------------------------------------------------------------
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | RELATIONS
+        |--------------------------------------------------------------------------
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | SCOPES
+        |--------------------------------------------------------------------------
+        */
 
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-}
+        /*
+        |--------------------------------------------------------------------------
+        | ACCESSORS
+        |--------------------------------------------------------------------------
+        */
+
+        /*
+        |--------------------------------------------------------------------------
+        | MUTATORS
+        |--------------------------------------------------------------------------
+        */
+    }
