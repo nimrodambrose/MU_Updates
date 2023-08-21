@@ -6,7 +6,7 @@
 
 <meta name="csrf-token" content="{{ csrf_token() }}"/> {{-- Encrypted CSRF token for Laravel, in order for Ajax requests to work --}}
 <title>{{ isset($title) ? $title.' :: '.backpack_theme_config('project_name') : backpack_theme_config('project_name') }}</title>
-<script src="{{'admin/admin-custom-scripts.js'}}"></script>
+<script src="{{'assets/js/admin-custom-scripts.js'}}"></script>
 @yield('before_styles')
 @stack('before_styles')
 
