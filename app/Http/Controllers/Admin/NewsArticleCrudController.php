@@ -89,6 +89,7 @@ class NewsArticleCrudController extends CrudController
                 CRUD::field('content')->label('Full Content')->type('textarea')->attributes(['rows' => '5']);
 
                 // getting user registration number from api
+                $educationLevelData = ApiHelper::getEducationLevel();
                 $programmesData = ApiHelper::getProgrammes();
                 $unitsData = ApiHelper::getUnits();
                 $yearData = ApiHelper::getYearOfStudy();
@@ -96,6 +97,19 @@ class NewsArticleCrudController extends CrudController
                 $formatted_unitAbbreviations = [];
                 $formatted_programme_abbreviations = [];
                 $formatted_years = [];
+                $formatted_level_name = [];
+
+                if ($educationLevelData !== null) {
+                    foreach ($educationLevelData['data'] as $level) {
+                        $level_id = $level['id'] ?? null;
+                        $attributes = $level['attributes'] ?? null;
+                        $level_name = $attributes['level_name'] ?? null;
+
+                        if ($level_id !== null && $level_name !== null) {
+                            $formatted_level_names[$level_name] = $level_name;
+                        }
+                    }
+                }
 
                 if ($unitsData !== null) {
                     foreach ($unitsData['data'] as $unit) {
@@ -132,8 +146,17 @@ class NewsArticleCrudController extends CrudController
                         }
                     }
                 }
-                // units
+                // level_name
                 CRUD::addField([
+                    'label'     => "Choose Education Level",
+                    'type'      => 'select_from_array',
+                    'name'      => 'level_name',
+                    'options'   => $formatted_level_names,
+                    'attributes'=> ['id' => 'level_name'],
+                ]);
+
+                 // units
+                 CRUD::addField([
                     'label'     => "Choose Unit",
                     'type'      => 'select_from_array',
                     'name'      => 'abbreviation',

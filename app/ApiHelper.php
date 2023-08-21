@@ -3,6 +3,16 @@
     use Illuminate\Support\Facades\Http;
 
     class ApiHelper {
+        public static function getEducationLevel() {
+            $response = Http::get('http://localhost:1337/api/education-levels');
+
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            return null;
+        }
+
         public static function getUnits() {
             $response = Http::get('http://localhost:1337/api/faculty-or-schools');
 
