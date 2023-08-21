@@ -82,8 +82,8 @@
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-success"><i class="la la-save"></i> {{ trans('backpack::base.save') }}</button>
-                        <a href="{{ backpack_url() }}" class="btn">{{ trans('backpack::base.cancel') }}</a>
+                        <button type="submit" class="btn btn-primary"><i class="la la-save"></i> {{ trans('backpack::base.save') }}</button>
+                        <a href="{{ backpack_url() }}" class="btn btn-secondary"> <span class="la la-ban"></span> {{ trans('backpack::base.cancel') }}</a>
                     </div>
                 </div>
 
@@ -134,8 +134,8 @@
                     </div>
 
                     <div class="card-footer">
-                            <button type="submit" class="btn btn-success"><i class="la la-save"></i> {{ trans('backpack::base.change_password') }}</button>
-                            <a href="{{ backpack_url() }}" class="btn">{{ trans('backpack::base.cancel') }}</a>
+                            <button type="submit" class="btn btn-primary"><i class="la la-save"></i> {{ trans('backpack::base.change_password') }}</button>
+                            <a href="{{ backpack_url() }}" class="btn btn-secondary"> <span class="la la-ban"></span> {{ trans('backpack::base.cancel') }}</a>
                     </div>
 
                 </div>
