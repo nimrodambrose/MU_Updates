@@ -11,7 +11,7 @@ $('input[name="title"]').on('input',function (e) {
 
 // short sms textarea switch
 $('input[name="short_sms_switch"]').on('change', function (e) {
-    var short_sms_switch = $('input[name="short_sms_switch"]').val();
+    var short_sms_switch = $(this).val();
     // console.log(short_sms_switch);
     if (short_sms_switch == 0) {
         // console.log(short_sms_switch);
@@ -21,4 +21,20 @@ $('input[name="short_sms_switch"]').on('change', function (e) {
         // console.log(short_sms_switch);
         $('#short_desc_field').removeAttr('disabled');
     }
+});
+
+// get Units on input
+$('#units_field').on('change', function () {
+    var units = $(this).val();
+    console.log(units);
+
+    $.ajax({
+        type: "post",
+        url: "/request/get-programmes",
+        data: units,
+        // dataType: "dataType",
+        success: function (response) {
+            console.log(response);
+        }
+    });
 });

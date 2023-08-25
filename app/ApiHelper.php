@@ -1,66 +1,80 @@
 <?php
-    namespace App;
-    use Illuminate\Support\Facades\Http;
+	namespace App;
+	use Illuminate\Support\Facades\Http;
 
-    class ApiHelper {
-        public static function getLevels() {
-            try {
-                //code...
-                $response = Http::get('http://localhost:1337/api/education-levels');
-    
-                if ($response->successful()) {
-                    foreach ($response['data'] as $level) {
-                        $level_id = $level['id'] ?? null;
-                        $attributes = $level['attributes'] ?? null;
-                        $level_name = $attributes['level_name'] ?? null;
-    
-                        if ($level_id !== null && $level_name !== null) {
-                            $levels[$level_id] = $level_name;
-                        }
-                    }
-                    // dd($levels);
-                    return $levels;
-                }
-            } catch (\Throwable $th) {
-                //throw $th;
-                return view('errors.500');
-            }
+	class ApiHelper {
+		
+		public static function getUnits() {
+			try {
+				//code...
+				$response = Http::get(env('API_URL').'/api/units');
+	
+				if ($response->successful()) {
+					if ($response['data'] == null) {
+						# code...
+						$units = [];
+					}else {
+						foreach ($response['data'] as $unit) {
+							$unit_id = $unit['id'] ?? null;
+							$attributes = $unit['attributes'] ?? null;
+							$unit_code = $attributes['code'] ?? null;
+		
+							if ($unit_id !== null && $unit_code !== null) {
+								$units[$unit_id] = $unit_code;
+							}
+						}
+					}
+					// dd($units);
+					return $units;
+				}
+			} catch (\Throwable $th) {
+				//throw $th;
+				return abort(500);
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        public static function getUnits() {
-            $response = Http::get('http://localhost:1337/api/faculty-or-schools');
+		public static function getProgrammes(){
+			try {
+				//code...
+				$response = Http::get(env('API_URL').'/api/programmes?populate=*');
+	
+				if ($response->successful()) {
+					if ($response['data'] == null) {
+						# code...
+						$programmes = [];
+					}else {
+						# code...
+						foreach ($response['data'] as $programme) {
+							$programme_id = $programme['id'] ?? null;
+							$attributes = $programme['attributes'] ?? null;
+							$programme_code = $attributes['code'] ?? null;
+		
+							if ($programme_id !== null && $programme_code !== null) {
+								$programmes[$programme_id] = $programme_code;
+							}
+						}
+					}
+					// dd($programmes);
+					return $programmes;
+				}
+			} catch (\Throwable $th) {
+				//throw $th;
+				return abort(500);
+			}
 
-            if ($response->successful()) {
-                return $response->json();
-            }
+			return null;
+		}
 
-            return null;
-        }
+		public static function getStudents() {
+			$response = Http::get(env('API_URL').'/api/students');
 
-        public static function getProgrammes(){
-            $response = Http::get('http://localhost:1337/api/programmes');
-            if($response->successful()){
-                return $response->json();
-            }
-        }
+			if ($response->successful()) {
+				return $response->json();
+			}
 
-        public static function getYearOfStudy(){
-            $response = Http::get('http://localhost:1337/api/year-of-studies');
-            if($response->successful()){
-                return $response->json();
-            }
-        }
+			return null;
+		}
 
-        public static function getUsers() {
-            $response = Http::get('http://localhost:1337/api/users');
-
-            if ($response->successful()) {
-                return $response->json();
-            }
-
-            return null;
-        }
-
-    }
+	}

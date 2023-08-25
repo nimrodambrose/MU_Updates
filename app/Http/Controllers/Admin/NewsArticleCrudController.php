@@ -82,8 +82,9 @@ class NewsArticleCrudController extends CrudController
                 return abort(403);
             }
             else {
-                // getting Levels from api
-                $levels = ApiHelper::getLevels();
+                // getting Units from api
+                $units = ApiHelper::getUnits();
+                $programmes = ApiHelper::getProgrammes();
 
                 CRUD::field('title')->type('text')->wrapper(['class' => 'form-group col-md-6']);
                 CRUD::field('slug')->type('text')->attributes(['disabled' => 'disabled'])->wrapper(['class' => 'form-group col-md-6']);
@@ -91,26 +92,14 @@ class NewsArticleCrudController extends CrudController
                 CRUD::field('short_desc')->label('Short SMS')->type('textarea')->attributes(['id' => 'short_desc_field', 'disabled' => 'disabled', 'rows' => '4'])->wrapper(['class' => 'form-group col-md-6']);
                 CRUD::field('content')->label('Full Content')->type('textarea')->attributes(['rows' => '5']);
 
-                // dd($levels);
-    
-                // level_name
-                CRUD::addField([
-                    'label'     => "Choose Level(s)",
-                    'type'      => 'select_multiple_from_array',
-                    // 'type'      => 'select_from_array',
-                    'name'      => 'levels',
-                    'options'   => $levels,
-                    'attributes'=> ['id' => 'levels_field', 'style' => 'font-size:small'],
-                    'allows_multiple' => true,
-                    'allows_null' => false,
-                ]);
+                // dd($units[0]);
 
                 // units
                 CRUD::addField([
-                    'label'     => "Choose Unit(s)",
+                    'label'     => "Choose Recipient Unit(s)",
                     'type'      => 'select_multiple_from_array',
                     'name'      => 'units',
-                    'options'   => [],
+                    'options'   => $units,
                     'attributes'=> ['id' => 'units_field'],
                     'allows_multiple' => true,
                     'allows_null' => false,
@@ -118,9 +107,10 @@ class NewsArticleCrudController extends CrudController
                 
                 // programmes
                 CRUD::addField([
-                    'label'      => "Choose Programme(s)",
+                    'label'      => "Choose Recipient Programme(s)",
                     'type'       => 'select_multiple_from_array',
                     'name'       => 'programmes',
+                    // 'options'    => $programmes,
                     'options'    => [],
                     'attributes' => ['id' => 'programme_field'],
                     'allows_multiple' => true,

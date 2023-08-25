@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\ApiHelper;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/admin', 302);
+    return redirect('/admin/dashboard/', 302);
 });
+
+Route::post('/request/get-programmes', [ApiHelper::class, 'getProgrammes']);
