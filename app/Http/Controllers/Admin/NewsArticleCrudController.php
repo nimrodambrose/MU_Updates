@@ -84,7 +84,7 @@ class NewsArticleCrudController extends CrudController
             else {
                 // getting Units from api
                 $units = ApiHelper::getUnits();
-                $programmes = ApiHelper::getProgrammes();
+                // $programmes = ApiHelper::getProgrammes();
 
                 CRUD::field('title')->type('text')->wrapper(['class' => 'form-group col-md-6']);
                 CRUD::field('slug')->type('text')->attributes(['disabled' => 'disabled'])->wrapper(['class' => 'form-group col-md-6']);
