@@ -19,10 +19,11 @@ class CreateNewsArticlesTable extends Migration
             $table->increments('id');
             $table->text('title');
             $table->text('slug')->unique();
-            // $table->longText('image')->nullable();
+            $table->longText('image')->nullable();
             $table->text('short_desc')->nullable();
-            $table->longtext('content');
+            $table->longText('content');
             $table->string('publisher');
+            $table->longText('recipients');
             $table->timestamps();
             $table->softDeletes();
         });

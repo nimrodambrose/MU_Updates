@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\ApiHelper;
+use App\Mail\NewChannel;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,7 @@ use App\ApiHelper;
 Route::get('/', function () {
     return redirect('/admin/dashboard/', 302);
 });
+
+Route::view('/mailTest', 'mail.newChannel');
 
 Route::post('/request/get-programmes', [ApiHelper::class, 'getProgrammes']);

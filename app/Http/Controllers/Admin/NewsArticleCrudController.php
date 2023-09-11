@@ -84,10 +84,9 @@ class NewsArticleCrudController extends CrudController
             else {
                 // getting Units from api
                 $units = ApiHelper::getUnits();
-                // $programmes = ApiHelper::getProgrammes();
 
                 CRUD::field('title')->type('text')->wrapper(['class' => 'form-group col-md-6']);
-                CRUD::field('slug')->type('text')->attributes(['disabled' => 'disabled'])->wrapper(['class' => 'form-group col-md-6']);
+                CRUD::field('slug')->type('text')->attributes(['readonly' => 'readonly'])->wrapper(['class' => 'form-group col-md-6']);
                 CRUD::field('short_sms_switch')->label('Send SMS Text')->type('switch')->attributes(['id' => 'short_sms_switch'])->wrapper(['class' => 'form-group col-md-6 pt-4']);
                 CRUD::field('short_desc')->label('Short SMS')->type('textarea')->attributes(['id' => 'short_desc_field', 'disabled' => 'disabled', 'rows' => '4'])->wrapper(['class' => 'form-group col-md-6']);
                 CRUD::field('content')->label('Full Content')->type('textarea')->attributes(['rows' => '5']);

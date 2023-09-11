@@ -20,9 +20,7 @@
 							$attributes = $unit['attributes'] ?? null;
 							$unit_code = $attributes['code'] ?? null;
 		
-							if ($unit_id !== null && $unit_code !== null) {
-								$units[$unit_id] = $unit_code;
-							}
+							$units[$unit_code] = $unit_code;
 						}
 					}
 					// dd($units);
@@ -49,7 +47,7 @@
 
 					// Loop through the API response data
 					foreach ($response['data'] as $programme) {
-						$unitId = $programme['attributes']['unit']['data']['id'] ?? null;
+						$unitId = $programme['attributes']['unit']['data']['attributes']['code'] ?? null;
 
 						// Check if the unitId is in the $units array
 						if ($unitId !== null && in_array($unitId, $units)) {
@@ -57,12 +55,11 @@
 							$attributes = $programme['attributes'] ?? null;
 							$programme_code = $attributes['code'] ?? null;
 
-							if ($programme_id !== null && $programme_code !== null) {
-								$programmes[$programme_id] = $programme_code;
-							}
+							$programmes[$programme_code] = $programme_code;
 						}
 					}
-
+					
+					// dd($programmes);
 					return $programmes;
 				}
 			} catch (\Throwable $th) {
@@ -74,7 +71,7 @@
 		}
 
 		public static function getStudents() {
-			$response = Http::get(env('API_URL').'/api/students');
+			$response = Http::get(env('API_URL').'/api/students?populate=*');
 
 			if ($response->successful()) {
 				return $response->json();

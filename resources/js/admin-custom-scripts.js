@@ -54,7 +54,7 @@ var programmes = [];
 $('#units_field').on('change', function () {
     // Get the selected units (an array)
     var units = $(this).val();
-    console.log(units);
+    // console.log(units);
 
     // Serialize the units array into JSON
     var unitsJSON = JSON.stringify(units);
@@ -72,10 +72,10 @@ $('#units_field').on('change', function () {
             $('#programme_field').empty();
 
             // Add an "All" option to select all programs
-            // $('#programme_field').append($('<option>', {
-            //     value: 'all',
-            //     text: 'All Programs'
-            // }));
+            $('#programme_field').append($('<option>', {
+                value: 'all',
+                text: 'All Programs'
+            }));
 
             // Add new options based on selected units
             $.each(programmes, function (key, value) {
@@ -83,7 +83,7 @@ $('#units_field').on('change', function () {
                     value: key,
                     text: value
                 }));
-                console.log(value);
+                // console.log(value);
             });
 
             // Refresh the Select2 field

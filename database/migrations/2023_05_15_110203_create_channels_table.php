@@ -16,8 +16,10 @@
                 $table->id();
                 $table->string('name');
                 $table->string('desc')->nullable();
-                $table->string('profile')->nullable();
-                $table->string('cover')->nullable();
+                $table->string('profile_image')->nullable();
+                $table->string('cover_image')->nullable();
+                $table->longText('recipient_units');
+                $table->longText('recipient_programmes');
                 $table->string('email')->unique();
                 $table->timestamps();
                 $table->softDeletes();
