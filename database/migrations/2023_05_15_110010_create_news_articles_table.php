@@ -23,7 +23,7 @@ class CreateNewsArticlesTable extends Migration
             $table->text('short_desc')->nullable();
             $table->longText('content');
             $table->string('publisher');
-            $table->longText('recipients');
+            $table->longText('recipients')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

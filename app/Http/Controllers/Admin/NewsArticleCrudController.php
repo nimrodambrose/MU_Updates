@@ -76,7 +76,7 @@ class NewsArticleCrudController extends CrudController
     {
         // CRUD::setValidation(NewsArticleRequest::class);
         // CRUD::setFromDb(); // set fields from db columns.
-        
+
         CRUD::setValidation(NewsArticleRequest::class);
             if (!backpack_user()->can((config('permission.profile'))) && !backpack_user()->can((config('permission.demo')))) {
                 return abort(403);
@@ -103,7 +103,7 @@ class NewsArticleCrudController extends CrudController
                     'allows_multiple' => true,
                     'allows_null' => false,
                 ]);
-                
+
                 // programmes
                 CRUD::addField([
                     'label'      => "Choose Recipient Programme(s)",
@@ -118,6 +118,75 @@ class NewsArticleCrudController extends CrudController
 
                 if (backpack_user()->can((config('permission.demo')))) {
                     CRUD::field('publisher')->type('hidden')->value('demo');
+                    $smsToBeSent = request();
+                    // send sms to students
+                    $response = Http::get('http://localhost:1337/api/users');
+                    if ($response->successful()) {
+                        $data = $response->json();
+
+                        $phone_numbers = [];
+
+                        foreach ($data as $entry) {
+                            $phone_number = $entry['phone_number'] ?? null;
+
+                            if ($phone_number !== null) {
+                                $phone_numbers[] = $phone_number;
+                            }
+                        }
+
+                        // dd($phone_numbers);
+
+                        if (!empty($phone_numbers)) {
+                            //…. sms url Api
+                            $Url ='https://apisms.beem.africa/v1/send';
+
+                            $api_key= '643449c5b429a174';
+                            $secret_key = 'NWUxODBhMjkzYjg3NDc0YWIwNzFhZWE4ZGI1NzFhNzA5ZjIwM2E4NzJjYTcxM2QzMzJjOGE5ZDQyODhjMzg3ZA==';
+
+
+                            $randomInt = random_int(10001, 100000);
+                            $id = Utils::randomId($randomInt);
+
+                            // Request payload
+                            $postData = array(
+                                'source_addr' => 'INFO',
+                                'encoding' => 0,
+                                'schedule_time' => '',
+                                'message' => $smsToBeSent->title,
+                                'recipients' => array()
+                            );
+
+                            foreach ($phone_numbers as $phone_number){
+                                // Destination phone number
+
+                                $dest_addr = '255' . $phone_number;
+                                $postData['recipients'][] = array('recipient_id' => $id, 'dest_addr' => $dest_addr);
+                            }
+
+                            // Setup cURL
+                            $ch = curl_init($Url);
+                            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                            curl_setopt($ch, CURLOPT_POST, TRUE);
+                            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                                'Authorization: Basic ' . base64_encode($api_key . ':' . $secret_key),
+                                'Content-Type: application/json'
+                            ));
+                            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+
+                            // Send the request
+                            $response = curl_exec($ch);
+
+                            // Check for errors
+                            if ($response === FALSE) {
+                                die(curl_error($ch));
+                            }
+
+                            // Close cURL
+                            curl_close($ch);
+                        }
+                    }
                 }
                 else {
 

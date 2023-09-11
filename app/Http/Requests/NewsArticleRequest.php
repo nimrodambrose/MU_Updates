@@ -25,10 +25,10 @@
         public function rules()
         {
             return [
-                // 'title' => 'required|min:2',
-                // 'slug' => 'required|unique:news_articles,slug,' . \Request::get('id'),
-                // 'content' => 'nullable|min:2|max:67295',
-                // 'short_desc' => '|required_if:short_sms_switch,1|max:200',
+                'title' => 'required|min:2',
+                'slug' => 'required|unique:news_articles,slug,' . \Request::get('id'),
+                'content' => 'nullable|min:2|max:67295',
+                'short_desc' => '|required_if:short_sms_switch,1|max:200',
                 // 'recipient' => 'required',
             ];
         }
