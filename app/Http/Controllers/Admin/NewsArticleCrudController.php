@@ -120,23 +120,25 @@ class NewsArticleCrudController extends CrudController
                     CRUD::field('publisher')->type('hidden')->value('demo');
                     $smsToBeSent = request();
                     // send sms to students
-                    $response = Http::get('http://localhost:1337/api/users');
+                    $response = Http::get('http://localhost:1337/api/Students?populate=*');
                     if ($response->successful()) {
                         $data = $response->json();
+                        // dd($data);
+                        if (isset($data['data'])) {
+                            $phones = [];
 
-                        $phone_numbers = [];
+                            foreach ($data['data'] as $entry) {
+                                $attributes = $entry['attributes'] ?? null;
+                                $phone = $attributes['phone'] ?? null;
 
-                        foreach ($data as $entry) {
-                            $phone_number = $entry['phone_number'] ?? null;
-
-                            if ($phone_number !== null) {
-                                $phone_numbers[] = $phone_number;
+                                if ($phone !== null) {
+                                    $phones[] = $phone;
+                                }
                             }
+
                         }
 
-                        // dd($phone_numbers);
-
-                        if (!empty($phone_numbers)) {
+                        if (!empty($phones)) {
                             //…. sms url Api
                             $Url ='https://apisms.beem.africa/v1/send';
 
@@ -156,10 +158,10 @@ class NewsArticleCrudController extends CrudController
                                 'recipients' => array()
                             );
 
-                            foreach ($phone_numbers as $phone_number){
+                            foreach ($phones as $phone){
                                 // Destination phone number
-
-                                $dest_addr = '255' . $phone_number;
+                                // dd($phones);
+                                $dest_addr = '255' . $phone;
                                 $postData['recipients'][] = array('recipient_id' => $id, 'dest_addr' => $dest_addr);
                             }
 
